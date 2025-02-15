@@ -4,3 +4,43 @@
   <input type="password" id="password" placeholder="Password" required>
   <button type="submit">Sign Up</button>
 </form>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script>
+  // Your web app's Firebase configuration (get this from Firebase console)
+const firebaseConfig = {
+  apiKey: "AIzaSyBUH2nuMG4aNvv5HjkfO6kOMURuEEhrFa0",
+  authDomain: "tasklist-86f58.firebaseapp.com",
+  projectId: "tasklist-86f58",
+  storageBucket: "tasklist-86f58.firebasestorage.app",
+  messagingSenderId: "74826211019",
+  appId: "1:74826211019:web:951021792b08b9daa6c54e",
+  measurementId: "G-L4Z70JG562"
+};
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  document.getElementById('signupForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    db.collection("users").add({
+      name: name,
+      email: email,
+      password: password
+    })
+    .then((docRef) => {
+      console.log("Document written with ID: ", docRef.id);
+      alert("Sign up successful!");
+    })
+    .catch((error) => {
+      console.error("Error adding document: ", error);
+      alert("Error signing up. Please try again.");
+    });
+  });
+</script>
